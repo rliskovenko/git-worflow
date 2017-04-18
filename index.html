@@ -10,9 +10,10 @@
 <script type="text/javascript" >
 var ggTmpl = {
 	colors:[ "#333333", "#53ad37", "#373fad", "#a137ad" ],
-	branch: { lineWidth: 3, spacingX: 20, showLabel: false},
+	branch: { lineWidth: 3, spacingX: 30, showLabel: false},
 	commit: {
 		spacingY: 30,
+		widthExtension: 30,
 		dot: { size: 7 },
 		message: { displayAuthor: false, displayBranch: true, displayHash: false, font: 'normal 12pt Courier' }	
 	}
@@ -26,14 +27,14 @@ var master = gg.branch('master');
 master.commit('@ version 1.1.1');
 
 var v1_1_2 = master.branch('1.1.2');
-v1_1_2.commit('something').commit('and even more');
+v1_1_2.commit('something').commit('and even more').tag('1.1.2');
 v1_1_2.merge(master);
 
 var v1_1_3 = master.branch({name:'1.1.3',column:1});
 v1_1_3.commit('new shiny features').commit('some buisiness logic overhead');
 
 var fix1 = master.branch({name:'1.1.2.1',column:2});
-fix1.commit('fixed').commit('now I\'m sure it is fixed');
+fix1.commit('fixed').commit('now I\'m sure it is fixed').tag('1.1.2.1');
 fix1.merge(master);
 master.merge(v1_1_3);
 
@@ -42,13 +43,13 @@ fix2.commit('more bugs fixed').commit('not so fast');
 fix2.merge(master);
 master.merge(v1_1_3);
 
-var fix2fix = fix2.branch({name:'1.1.2.3',column:3});
+var fix2fix = fix2.branch({name:'1.1.2.2-fix',column:3});
 fix2fix.commit('hate that bug!');
-fix2fix.merge(fix2);
-fix2.merge(master);
+fix2fix.merge(fix2)
+fix2.merge(master).tag('1.1.2.2');
 master.merge(v1_1_3);
 
-v1_1_3.commit('polishing the code');
+v1_1_3.commit('polishing the code').tag('1.1.3');
 v1_1_3.merge(master);
 
 </script>
